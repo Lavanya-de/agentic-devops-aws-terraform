@@ -21,6 +21,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
+      - name: Compute cache key
+        id: cachekey
+        run: echo "key=node-modules-${{ hashFiles('codebase/rdicidr-0.1.0/package.json') }}" >> "$GITHUB_OUTPUT"
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -33,7 +37,7 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: codebase/rdicidr-0.1.0/node_modules
-          key: node-modules-${{ hashFiles('codebase/rdicidr-0.1.0/package.json') }}
+          key: ${{ steps.cachekey.outputs.key }}
 
   lint:
     needs: [install]
@@ -41,6 +45,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+
+      - name: Compute cache key
+        id: cachekey
+        run: echo "key=node-modules-${{ hashFiles('codebase/rdicidr-0.1.0/package.json') }}" >> "$GITHUB_OUTPUT"
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -51,7 +59,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: codebase/rdicidr-0.1.0/node_modules
-          key: node-modules-${{ hashFiles('codebase/rdicidr-0.1.0/package.json') }}
+          key: ${{ steps.cachekey.outputs.key }}
 
       - name: Run linter
         run: npm run lint
@@ -66,6 +74,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
+      - name: Compute cache key
+        id: cachekey
+        run: echo "key=node-modules-${{ hashFiles('codebase/rdicidr-0.1.0/package.json') }}" >> "$GITHUB_OUTPUT"
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -75,7 +87,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: codebase/rdicidr-0.1.0/node_modules
-          key: node-modules-${{ hashFiles('codebase/rdicidr-0.1.0/package.json') }}
+          key: ${{ steps.cachekey.outputs.key }}
 
       - name: Run tests
         env:
@@ -89,6 +101,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
+      - name: Compute cache key
+        id: cachekey
+        run: echo "key=node-modules-${{ hashFiles('codebase/rdicidr-0.1.0/package.json') }}" >> "$GITHUB_OUTPUT"
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -98,7 +114,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: codebase/rdicidr-0.1.0/node_modules
-          key: node-modules-${{ hashFiles('codebase/rdicidr-0.1.0/package.json') }}
+          key: ${{ steps.cachekey.outputs.key }}
 
       - name: Build project
         run: npm run build
