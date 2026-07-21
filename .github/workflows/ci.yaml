@@ -92,6 +92,7 @@ jobs:
       - name: Run tests
         env:
           CI: true
+          REACT_APP_API_URL: https://api.example.com
         run: npm run test
 
   build:
@@ -117,4 +118,6 @@ jobs:
           key: ${{ steps.cachekey.outputs.key }}
 
       - name: Build project
+        env:
+          REACT_APP_API_URL: https://api.example.com
         run: npm run build
